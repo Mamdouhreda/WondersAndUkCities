@@ -1,0 +1,4 @@
+"editor.suggest.showKeywords": true,
+"editor.suggest.showMethods": true,
+"editor.suggest.showFunctions": true,
+"editor.suggest.showVariables": true,

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- slider slick css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+    />
+    <!-- font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              main: "#1f312f",
+              main2: "#6c7776",
+              main3: "#C86E04",
+              main4: "#e4e9e8",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "DM Sans", sans-serif;
+        background-color: #e4e9e8;
+      }
+      .slide {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- first part -->
+    <div class="container mx-auto">
+      <h1 class="text-3xl py-5">Wonders of the World</h1>
+      <div class="carousel w-full">
+        <div class="px-2">
+          <div class="h-64 w-64 bg-white rounded-lg">
+            <img
+              src="images/spencer-davis-Ivwyqtw3PzU-unsplash.png"
+              class="h-32 w-full object-cover rounded-lg"
+            />
+            <div class="px-4 py-2">
+              <h1 class="text-xl font-bold">Petra</h1>
+              <p class="text-xs text-gray-500">
+                Wadi Musa, Petra, Ma’an, 71882, Jordan
+              </p>
+              <div class="pt-5 text-sm">
+                <h2>Latitude: <span class="text-gray-500">34.2354433</span></h2>
+                <h2>
+                  Longitude: <span class="text-gray-500"> -77.9493551</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-2">
+          <div class="h-64 w-64 bg-white rounded-lg">
+            <img
+              src="images/spencer-davis-Ivwyqtw3PzU-unsplash.png"
+              class="h-32 w-full object-cover rounded-lg"
+            />
+            <div class="px-4 py-2">
+              <h1 class="text-xl font-bold">Petra</h1>
+              <p class="text-xs text-gray-500">
+                Wadi Musa, Petra, Ma’an, 71882, Jordan
+              </p>
+              <div class="pt-5 text-sm">
+                <h2>Latitude: <span class="text-gray-500">34.2354433</span></h2>
+                <h2>
+                  Longitude: <span class="text-gray-500"> -77.9493551</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-2">
+          <div class="h-64 w-64 bg-white rounded-lg">
+            <img
+              src="images/spencer-davis-Ivwyqtw3PzU-unsplash.png"
+              class="h-32 w-full object-cover rounded-lg"
+            />
+            <div class="px-4 py-2">
+              <h1 class="text-xl font-bold">Petra</h1>
+              <p class="text-xs text-gray-500">
+                Wadi Musa, Petra, Ma’an, 71882, Jordan
+              </p>
+              <div class="pt-5 text-sm">
+                <h2>Latitude: <span class="text-gray-500">34.2354433</span></h2>
+                <h2>
+                  Longitude: <span class="text-gray-500"> -77.9493551</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-2">
+          <div class="h-64 w-64 bg-white rounded-lg">
+            <img
+              src="images/spencer-davis-Ivwyqtw3PzU-unsplash.png"
+              class="h-32 w-full object-cover rounded-lg"
+            />
+            <div class="px-4 py-2">
+              <h1 class="text-xl font-bold">Petra</h1>
+              <p class="text-xs text-gray-500">
+                Wadi Musa, Petra, Ma’an, 71882, Jordan
+              </p>
+              <div class="pt-5 text-sm">
+                <h2>Latitude: <span class="text-gray-500">34.2354433</span></h2>
+                <h2>
+                  Longitude: <span class="text-gray-500"> -77.9493551</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-2">
+          <div class="h-64 w-64 bg-white rounded-lg">
+            <img
+              src="images/spencer-davis-Ivwyqtw3PzU-unsplash.png"
+              class="h-32 w-full object-cover rounded-lg"
+            />
+            <div class="px-4 py-2">
+              <h1 class="text-xl font-bold">Petra</h1>
+              <p class="text-xs text-gray-500">
+                Wadi Musa, Petra, Ma’an, 71882, Jordan
+              </p>
+              <div class="pt-5 text-sm">
+                <h2>Latitude: <span class="text-gray-500">34.2354433</span></h2>
+                <h2>
+                  Longitude: <span class="text-gray-500"> -77.9493551</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-start mt-2">
+        <svg
+          id="prevBtn"
+          class="grayscale opacity-60 hover:opacity-100"
+          xmlns="http://www.w3.org/2000/svg"
+          width="38"
+          height="38"
+          viewBox="0 0 38 38"
+          style="transform: scaleX(-1)"
+        >
+          <g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
+            <circle
+              id="Ellipse_1"
+              data-name="Ellipse 1"
+              cx="19"
+              cy="19"
+              r="19"
+              transform="translate(0.252)"
+              fill="#1f312f"
+            />
+            <g
+              id="np_arrow-right_888647_000000"
+              transform="translate(9.384 11.831)"
+            >
+              <path
+                id="Path_3"
+                data-name="Path 3"
+                d="M12.5,45.832H29.361v2.175H12.5Z"
+                transform="translate(-12.5 -39.631)"
+                fill="#fff"
+              />
+              <path
+                id="Path_4"
+                data-name="Path 4"
+                d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
+                transform="translate(-42.672 -22.082)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+        </svg>
+        <svg
+          id="nextBtn"
+          class="grayscale opacity-60 hover:opacity-100"
+          xmlns="http://www.w3.org/2000/svg"
+          width="38"
+          height="38"
+          viewBox="0 0 38 38"
+        >
+          <g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
+            <circle
+              id="Ellipse_1"
+              data-name="Ellipse 1"
+              cx="19"
+              cy="19"
+              r="19"
+              transform="translate(0.252)"
+              fill="#1f312f"
+            />
+            <g
+              id="np_arrow-right_888647_000000"
+              transform="translate(9.384 11.831)"
+            >
+              <path
+                id="Path_3"
+                data-name="Path 3"
+                d="M12.5,45.832H29.361v2.175H12.5Z"
+                transform="translate(-12.5 -39.631)"
+                fill="#fff"
+              />
+              <path
+                id="Path_4"
+                data-name="Path 4"
+                d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
+                transform="translate(-42.672 -22.082)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          $(".carousel").slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            variableWidth: true,
+            centerMode: false,
+            prevArrow: $("#prevBtn"),
+            nextArrow: $("#nextBtn"),
+          });
+        });
+      </script>
+    </div>
+
+    <!-- Second part -->
+
+    <div class="w-full h-full relative rounded-t-lg overflow-hidden mt-2">
+      <img
+        class="w-full max-h-64 object-cover"
+        src="images/d-jonez-qiH16d5SRxg-unsplash.png"
+        alt=""
+      />
+      <div class="absolute inset-0 grid place-items-center">
+        <div>
+          <h1 class="text-4xl mb-4 text-center text-white">City Search</h1>
+          <div
+            class="grid grid-cols-5 gap-3 bg-white p-2 rounded-xl md:grid-cols-6"
+          >
+            <input
+              type="text"
+              placeholder="Enter a City name"
+              class="col-span-4 p-2 md:col-span-5"
+            />
+            <button
+              class="bg-main3 hover:bg-blue-600 rounded-xl text-white p-3 col-span-1"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- result -->
+    <div class="bg-main4 rounded-3xl -mt-5 relative z-10">
+      <div class="container mx-auto min-h-screen py-8">
+        <h1>The results are...</h1>
+        <div class="mx-auto h-50 bg-white w-auto p-3 relative rounded-lg mt-3">
+          <h1>Sheffield, UK</h1>
+          <div class="pt-6">
+            <p>latitude:2132.22</p>
+            <p>longitude:12312223</p>
+          </div>
+          <div class="absolute flex right-0 bottom-0 p-2">
+            <a href="https://www.google.com/" class="mt-1 mr-1"
+              >Get directions</a
+            >
+            <svg
+              id="Group_12"
+              data-name="Group 12"
+              xmlns="http://www.w3.org/2000/svg"
+              width="38"
+              height="38"
+              viewBox="0 0 38 38"
+            >
+              <circle
+                id="Ellipse_1"
+                data-name="Ellipse 1"
+                cx="19"
+                cy="19"
+                r="19"
+                fill="#c86e04"
+              />
+              <g
+                id="np_arrow-right_888647_000000"
+                transform="translate(16 11.711)"
+              >
+                <path
+                  id="Path_4"
+                  data-name="Path 4"
+                  d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
+                  transform="translate(-53.332 -22.082)"
+                  fill="#fff"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="mx-auto h-50 bg-white w-auto p-3 relative rounded-lg mt-3">
+          <h1>Sheffield, UK</h1>
+          <div class="pt-6">
+            <p>latitude:2132.22</p>
+            <p>longitude:12312223</p>
+          </div>
+          <div class="absolute flex right-0 bottom-0 p-2">
+            <a href="https://www.google.com/" class="mt-1 mr-1"
+              >Get directions</a
+            >
+            <svg
+              id="Group_12"
+              data-name="Group 12"
+              xmlns="http://www.w3.org/2000/svg"
+              width="38"
+              height="38"
+              viewBox="0 0 38 38"
+            >
+              <circle
+                id="Ellipse_1"
+                data-name="Ellipse 1"
+                cx="19"
+                cy="19"
+                r="19"
+                fill="#c86e04"
+              />
+              <g
+                id="np_arrow-right_888647_000000"
+                transform="translate(16 11.711)"
+              >
+                <path
+                  id="Path_4"
+                  data-name="Path 4"
+                  d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
+                  transform="translate(-53.332 -22.082)"
+                  fill="#fff"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="mx-auto h-50 bg-white w-auto p-3 relative rounded-lg mt-3">
+          <h1>Sheffield, UK</h1>
+          <div class="pt-6">
+            <p>latitude:2132.22</p>
+            <p>longitude:12312223</p>
+          </div>
+          <div class="absolute flex right-0 bottom-0 p-2">
+            <a href="https://www.google.com/" class="mt-1 mr-1"
+              >Get directions</a
+            >
+            <svg
+              id="Group_12"
+              data-name="Group 12"
+              xmlns="http://www.w3.org/2000/svg"
+              width="38"
+              height="38"
+              viewBox="0 0 38 38"
+            >
+              <circle
+                id="Ellipse_1"
+                data-name="Ellipse 1"
+                cx="19"
+                cy="19"
+                r="19"
+                fill="#c86e04"
+              />
+              <g
+                id="np_arrow-right_888647_000000"
+                transform="translate(16 11.711)"
+              >
+                <path
+                  id="Path_4"
+                  data-name="Path 4"
+                  d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
+                  transform="translate(-53.332 -22.082)"
+                  fill="#fff"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End second part -->
+  </body>
+</html>

@@ -1,0 +1,170 @@
+{% extends "base.twig" %}
+
+{% block body %}
+	{% set places = craft.app.getModule('places').getPlaces() %}
+<div class="container mx-auto px-2">
+      <h1 class="text-3xl py-5 px-2">Wonders of the World</h1>
+      <div class="carousel w-full">
+        {% for place in places %}
+      <div class="px-2">
+        <div class="h-64 w-64 bg-white rounded-lg">
+          {% if place.photoUrl is not null %}
+            <img src="{{ place.photoUrl }}" class="h-32 w-full object-cover rounded-lg" />
+          {% endif %}
+          <div class="px-4 py-2">
+            <div class="pb-2">
+            <h1 class="text-md font-bold">{{ place.name }}</h1>
+            <p class="text-xs text-gray-500">{{ place.address }}</p> 
+            </div>
+            <div class="text-sm">
+              <h2>Latitude: <span class="text-gray-500">{{ place.geometry.location.lat }}</span></h2>
+              <h2>Longitude: <span class="text-gray-500">{{ place.geometry.location.lng }}</span></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+      </div>
+      <div class="flex justify-start mt-4 px-2">
+        <svg
+          id="prevBtn"
+          class="grayscale opacity-60 hover:opacity-100 w-8 h-8"
+          xmlns="http://www.w3.org/2000/svg"
+          width="38"
+          height="38"
+          viewBox="0 0 38 38"
+          style="transform: scaleX(-1)"
+        >
+          <g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
+            <circle
+              id="Ellipse_1"
+              data-name="Ellipse 1"
+              cx="19"
+              cy="19"
+              r="19"
+              transform="translate(0.252)"
+              fill="#1f312f"
+            />
+            <g
+              id="np_arrow-right_888647_000000"
+              transform="translate(9.384 11.831)"
+            >
+              <path
+                id="Path_3"
+                data-name="Path 3"
+                d="M12.5,45.832H29.361v2.175H12.5Z"
+                transform="translate(-12.5 -39.631)"
+                fill="#fff"
+              />
+              <path
+                id="Path_4"
+                data-name="Path 4"
+                d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
+                transform="translate(-42.672 -22.082)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+        </svg>
+        <svg
+          id="nextBtn"
+          class="grayscale opacity-60 hover:opacity-100 w-8 h-8"
+          xmlns="http://www.w3.org/2000/svg"
+          width="38"
+          height="38"
+          viewBox="0 0 38 38"
+        >
+          <g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
+            <circle
+              id="Ellipse_1"
+              data-name="Ellipse 1"
+              cx="19"
+              cy="19"
+              r="19"
+              transform="translate(0.252)"
+              fill="#1f312f"
+            />
+            <g
+              id="np_arrow-right_888647_000000"
+              transform="translate(9.384 11.831)"
+            >
+              <path
+                id="Path_3"
+                data-name="Path 3"
+                d="M12.5,45.832H29.361v2.175H12.5Z"
+                transform="translate(-12.5 -39.631)"
+                fill="#fff"
+              />
+              <path
+                id="Path_4"
+                data-name="Path 4"
+                d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
+                transform="translate(-42.672 -22.082)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+     <!-- second part  -->
+
+     <form id="searchForm">
+      <input type="text" id="city" name="city" required>
+      <button type="submit">Search</button>
+    </form>
+  
+    <div id="error" style="color: red;"></div>
+    <div id="result"></div>
+    <div id="locationInfo"></div>
+    <div id="locationLink"></div>
+        
+
+
+
+     <script>
+      function submitForm(e) {
+        e.preventDefault();
+  
+        const city = document.getElementById('city').value;
+  
+        fetch('/actions/search/search/search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-Token': "{{ craft.app.request.csrfToken }}",
+          },
+          body: JSON.stringify({ city: city }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            document.getElementById('error').innerText = data.error;
+            document.getElementById('result').innerText = '';
+            document.getElementById('locationInfo').innerText = '';
+            document.getElementById('locationLink').innerText = '';
+          } else {
+            const cityInfo = `City: ${data.city}`;
+            const locationInfo = `Longitude: ${data.longitude}, Latitude: ${data.latitude}`;
+            const directionsLink = `https://www.google.com/maps?q=${encodeURIComponent(data.city)}`;
+  
+            document.getElementById('error').innerText = '';
+            document.getElementById('result').innerText = cityInfo;
+            document.getElementById('locationInfo').innerText = locationInfo;
+            document.getElementById('locationLink').innerHTML = `<a href="${directionsLink}" target="_blank">View Location on Google Maps</a>`;
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+  
+      document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('searchForm').addEventListener('submit', submitForm);
+      });
+    </script>
+    
+     <!-- end second part  -->
+
+
+{% endblock %}

@@ -1,0 +1,8 @@
+baseUrl: $PRIMARY_SITE_URL
+handle: default
+hasUrls: true
+language: en-US
+name: 'http://localhost:8000/'
+primary: true
+siteGroup: 53efd587-4992-4b63-8c7b-8de98803a5eb # http://localhost:8000/
+sortOrder: 1

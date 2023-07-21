@@ -1,0 +1,22 @@
+dateModified: 1689702236
+email:
+  fromEmail: mamdohreda@gmail.com
+  fromName: 'http://localhost:8000/'
+  transportType: craft\mail\transportadapters\Sendmail
+meta:
+  __names__:
+    3b3c7026-3953-47c6-988f-d1036a4b2b62: Common # Common
+    53efd587-4992-4b63-8c7b-8de98803a5eb: 'http://localhost:8000/' # http://localhost:8000/
+    8970e0a6-9ec2-41ff-a988-255015a9a115: 'http://localhost:8000/' # http://localhost:8000/
+system:
+  edition: solo
+  live: true
+  name: 'http://localhost:8000/'
+  schemaVersion: 4.4.0.4
+  timeZone: America/Los_Angeles
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  requireEmailVerification: true
