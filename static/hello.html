@@ -53,3 +53,72 @@
     </script>
 </body>
 </html>
+
+
+<form id="searchForm">
+    <input type="text" id="city" name="city" required>
+    <button type="submit">Search</button>
+</form>
+
+<div id="error" style="color: red;"></div>
+<div id="result"></div>
+
+<script>
+    function getPlaceDetails(placeId) {
+        fetch('/actions/search/search/get-place-details', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-Token': "{{ craft.app.request.csrfToken }}",
+            },
+            body: JSON.stringify({ place_id: placeId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Error:', data.error);
+            } else {
+                const cityInfo = `City: ${data.city}`;
+                const locationInfo = `Longitude: ${data.longitude}, Latitude: ${data.latitude}`;
+                const directionsLink = `https://www.google.com/maps?q=${encodeURIComponent(data.city)}`;
+                const resultContainer = document.getElementById('result');
+                resultContainer.innerHTML += `<div>${cityInfo}<br>${locationInfo}<br><a href="${directionsLink}" target="_blank">View Location on Google Maps</a></div>`;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function submitForm(e) {
+        e.preventDefault();
+        const city = document.getElementById('city').value;
+
+        fetch('/actions/search/search/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-Token': "{{ craft.app.request.csrfToken }}",
+            },
+            body: JSON.stringify({ city: city }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById('error').innerText = data.error;
+                document.getElementById('result').innerHTML = '';
+            } else {
+                document.getElementById('error').innerText = '';
+                document.getElementById('result').innerHTML = ''; // Clear previous results
+
+                // Get details for each prediction
+                data.predictions.forEach(prediction => getPlaceDetails(prediction.place_id));
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('searchForm').addEventListener('submit', submitForm);
+    });
+</script>
