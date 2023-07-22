@@ -1,4 +1,4 @@
-git# Wonders and UK Search Places 
+# Wonders and UK Search Places 
 
 This project, crafted using Craft CMS, exhibits a breathtaking array of global wonders and includes a unique functionality to search for specific cities in the UK.
 
