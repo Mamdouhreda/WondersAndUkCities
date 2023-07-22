@@ -97,7 +97,6 @@ class Module extends BaseModule
             // Return the photo URL
             return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=$photoReference&key=$apiKey";
         }
-
         // If the place has no photos, return null
         return null;
     }
