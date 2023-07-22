@@ -1,213 +1,92 @@
 {% extends "base.twig" %}
 
 {% block body %}
+	<!-- frist part  slider part-->
+
+	<!-- Fetching places from the places module -->
 	{% set places = craft.app.getModule('places').getPlaces() %}
-<div class="container mx-auto px-2">
-      <h1 class="text-3xl py-5 px-2 text-main">Wonders of the World</h1>
-      <div class="carousel w-full">
-        {% for place in places %}
-      <div class="px-2">
-        <div class="h-64 w-64 bg-white rounded-lg">
-          {% if place.photoUrl is not null %}
-            <img src="{{ place.photoUrl }}" class="h-32 w-full object-cover rounded-lg" />
-          {% endif %}
-          <div class="px-4 py-2">
-            <div class="pb-2">
-            <h1 class="text-md font-bold text-main">{{ place.name }}</h1>
-            <p class="text-xs text-gray-500">{{ place.address }}</p> 
-            </div>
-            <div class="text-sm">
-              <h2>Latitude: <span class="text-gray-500">{{ place.geometry.location.lat }}</span></h2>
-              <h2>Longitude: <span class="text-gray-500">{{ place.geometry.location.lng }}</span></h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
-      </div>
-      <div class="flex justify-start mt-4 px-2">
-        <svg
-          id="prevBtn"
-          class="grayscale opacity-60 hover:opacity-100 w-8 h-8"
-          xmlns="http://www.w3.org/2000/svg"
-          width="38"
-          height="38"
-          viewBox="0 0 38 38"
-          style="transform: scaleX(-1)"
-        >
-          <g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
-            <circle
-              id="Ellipse_1"
-              data-name="Ellipse 1"
-              cx="19"
-              cy="19"
-              r="19"
-              transform="translate(0.252)"
-              fill="#1f312f"
-            />
-            <g
-              id="np_arrow-right_888647_000000"
-              transform="translate(9.384 11.831)"
-            >
-              <path
-                id="Path_3"
-                data-name="Path 3"
-                d="M12.5,45.832H29.361v2.175H12.5Z"
-                transform="translate(-12.5 -39.631)"
-                fill="#fff"
-              />
-              <path
-                id="Path_4"
-                data-name="Path 4"
-                d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
-                transform="translate(-42.672 -22.082)"
-                fill="#fff"
-              />
-            </g>
-          </g>
-        </svg>
-        <svg
-          id="nextBtn"
-          class="grayscale opacity-60 hover:opacity-100 w-8 h-8"
-          xmlns="http://www.w3.org/2000/svg"
-          width="38"
-          height="38"
-          viewBox="0 0 38 38"
-        >
-          <g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
-            <circle
-              id="Ellipse_1"
-              data-name="Ellipse 1"
-              cx="19"
-              cy="19"
-              r="19"
-              transform="translate(0.252)"
-              fill="#1f312f"
-            />
-            <g
-              id="np_arrow-right_888647_000000"
-              transform="translate(9.384 11.831)"
-            >
-              <path
-                id="Path_3"
-                data-name="Path 3"
-                d="M12.5,45.832H29.361v2.175H12.5Z"
-                transform="translate(-12.5 -39.631)"
-                fill="#fff"
-              />
-              <path
-                id="Path_4"
-                data-name="Path 4"
-                d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z"
-                transform="translate(-42.672 -22.082)"
-                fill="#fff"
-              />
-            </g>
-          </g>
-        </svg>
-      </div>
-    </div>
-     <!-- Second part -->
-         
-     <div class="w-full h-full relative rounded-t-2xl overflow-hidden  mt-2">
-      <img class="w-full max-h-96 object-cover" src="images/d-jonez-qiH16d5SRxg-unsplash.png" alt="UK places" />
-      <div class="absolute inset-0 grid place-items-center">
-          <div>
-              <h1 class="md:text-4xl text-2xl mb-4 text-center text-white">City Search</h1>
-              <form id="searchForm" class="grid grid-cols-4 gap-3 bg-white p-2 rounded-xl md:grid-cols-6 ">
-                  <input type="text" id="city" name="city" placeholder="Enter a City name" class="col-span-3 p-2 md:col-span-5 focus:outline-none" required />
-                  <button type="submit" class="bg-main3 hover:bg-blue-600 rounded-xl text-white p-3 col-span-1">Search</button>
-              </form>
-              <div id="error" class="mt-2 text-red-500"></div>
-          </div>
-      </div>
-  </div>
-  
-  <!-- Result part -->
-  <div class="bg-main4 rounded-3xl -mt-5 relative z-10">
-      <div class="container mx-auto min-h-screen py-8 px-2">
-          <h1 class="mb-5 text-main">The results are...</h1>
-          <div id="result"></div>
-      </div>
-  </div>
-  
-  <script>
-  function getPlaceDetails(placeId) {
-      fetch('/actions/search/search/get-place-details', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'X-CSRF-Token': "{{ craft.app.request.csrfToken }}",
-          },
-          body: JSON.stringify({ place_id: placeId }),
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.error) {
-              console.error('Error:', data.error);
-          } else {
-              const cityInfo = `<h1 class="text-xl font-bold text-blue-600">${data.city}</h1>`;
-              const locationInfo = `<div class="pt-6"><p>Latitude: ${data.latitude}</p><p>Longitude: ${data.longitude}</p></div>`;
-              const directionsLink = `
-                  <div class="absolute flex right-0 bottom-0 p-2 ">
-                      <a href="https://www.google.com/maps?q=${encodeURIComponent(data.city)}" target="_blank" class="mt-2 mr-1 text-main3 underline">Get directions</a>
-                      <svg id="Group_12" data-name="Group 12" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38">
-                          <circle id="Ellipse_1" data-name="Ellipse 1" cx="19" cy="19" r="19" fill="#c86e04"/>
-                          <g id="np_arrow-right_888647_000000" transform="translate(16 11.711)">
-                              <path id="Path_4" data-name="Path 4" d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z" transform="translate(-53.332 -22.082)" fill="#fff"/>
-                          </g>
-                      </svg>
-                  </div>
-              `;
-              const resultContainer = document.getElementById('result');
-              resultContainer.innerHTML += `
-                  <div class="mx-auto h-50 bg-white w-auto p-3 relative rounded-lg mt-3">
-                      ${cityInfo}
-                      ${locationInfo}
-                      ${directionsLink}
-                  </div>
-              `;
-          }
-      })
-      .catch(error => console.error('Error:', error));
-  }
-  
-  function submitForm(e) {
-      e.preventDefault();
-      const city = document.getElementById('city').value;
-  
-      fetch('/actions/search/search/search', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'X-CSRF-Token': "{{ craft.app.request.csrfToken }}",
-          },
-          body: JSON.stringify({ city: city }),
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.error) {
-              document.getElementById('error').innerText = data.error;
-              document.getElementById('result').innerHTML = '';
-          } else {
-              document.getElementById('error').innerText = '';
-              document.getElementById('result').innerHTML = ''; // Clear previous results
-  
-              // Get details for each prediction
-              data.predictions.forEach(prediction => getPlaceDetails(prediction.place_id));
-          }
-      })
-      .catch(error => console.error('Error:', error));
-  }
-  
-  document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById('searchForm').addEventListener('submit', submitForm);
-  });
-  </script>
-  
-  
-     <!-- end result part  -->
+		<div class="container mx-auto px-2"> <h1 class="text-3xl py-5 px-2 text-main">Wonders of the World</h1>
+		<div
+			class="carousel w-full">
+
+			<!-- The slider loop through all places and display it  -->
+			{% for place in places %}
+				<div class="px-2">
+					<div class="h-64 w-64 bg-white rounded-lg">
+						{% if place.photoUrl is not null %}
+							<img src="{{ place.photoUrl }}" class="h-32 w-full object-cover rounded-lg"/>
+						{% endif %}
+						<div class="px-4 py-2">
+							<div class="pb-2">
+								<h1 class="text-md font-bold text-main">{{ place.name }}</h1>
+								<p class="text-xs text-gray-500">{{ place.address }}</p>
+							</div>
+							<div class="text-sm">
+								<h2>Latitude:
+									<span class="text-gray-500">{{ place.geometry.location.lat }}</span>
+								</h2>
+								<h2>Longitude:
+									<span class="text-gray-500">{{ place.geometry.location.lng }}</span>
+								</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="flex justify-start mt-4 px-2">
+			<svg id="prevBtn" class="grayscale opacity-60 hover:opacity-100 w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewbox="0 0 38 38" style="transform: scaleX(-1)">
+				<g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
+					<circle id="Ellipse_1" data-name="Ellipse 1" cx="19" cy="19" r="19" transform="translate(0.252)" fill="#1f312f"/>
+					<g id="np_arrow-right_888647_000000" transform="translate(9.384 11.831)">
+						<path id="Path_3" data-name="Path 3" d="M12.5,45.832H29.361v2.175H12.5Z" transform="translate(-12.5 -39.631)" fill="#fff"/>
+						<path id="Path_4" data-name="Path 4" d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z" transform="translate(-42.672 -22.082)" fill="#fff"/>
+					</g>
+				</g>
+			</svg>
+			<svg id="nextBtn" class="grayscale opacity-60 hover:opacity-100 w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewbox="0 0 38 38">
+				<g id="Group_10" data-name="Group 10" transform="translate(-0.252)">
+					<circle id="Ellipse_1" data-name="Ellipse 1" cx="19" cy="19" r="19" transform="translate(0.252)" fill="#1f312f"/>
+					<g id="np_arrow-right_888647_000000" transform="translate(9.384 11.831)">
+						<path id="Path_3" data-name="Path 3" d="M12.5,45.832H29.361v2.175H12.5Z" transform="translate(-12.5 -39.631)" fill="#fff"/>
+						<path id="Path_4" data-name="Path 4" d="M54.856,36.66l-1.524-1.524L59.1,29.371l-5.766-5.765,1.524-1.524,7.288,7.289Z" transform="translate(-42.672 -22.082)" fill="#fff"/>
+					</g>
+				</g>
+			</svg>
+		</div>
+	</div>
+	<!-- end first part  -->
+
+
+	<!-- Second part -->
+
+	<div class="w-full h-full relative rounded-t-2xl overflow-hidden  mt-2">
+		<img class="w-full max-h-96 object-cover" src="images/d-jonez-qiH16d5SRxg-unsplash.png" alt="UK places"/>
+		<div class="absolute inset-0 grid place-items-center">
+			<div>
+				<h1 class="md:text-4xl text-2xl mb-4 text-center text-white">City Search</h1>
+
+				<!-- The search form -->
+
+				<form id="searchForm" class="grid grid-cols-4 gap-3 bg-white p-2 rounded-xl md:grid-cols-6 ">
+					<input type="text" id="city" name="city" placeholder="Enter a City name" class="col-span-3 p-2 md:col-span-5 focus:outline-none" required/>
+					<button type="submit" class="bg-main3 hover:bg-blue-600 rounded-xl text-white p-3 col-span-1">Search</button>
+				</form>
+        		<!-- Error message display area -->
+				<div id="error" class="mt-2 text-white font-bold"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Result part -->
+	<div class="bg-main4 rounded-3xl -mt-5 relative z-10">
+		<div class="container mx-auto min-h-screen py-8 px-2">
+			<h1 class="mb-5 text-main">The results are...</h1>
+			<div id="result"></div>
+		</div>
+	</div>
+
+
+	<!-- end second part  -->
 
 {% endblock %}
