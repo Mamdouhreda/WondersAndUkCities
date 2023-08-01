@@ -2,7 +2,7 @@
 
 namespace modules\search;
 
-// Import the necessary classes
+// Import the classes
 use Craft;
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\UrlManager;

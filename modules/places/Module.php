@@ -14,26 +14,8 @@ class Module extends BaseModule
         // Sets an alias for the module
         Craft::setAlias('@modules/places', __DIR__);
 
-        // Check the type of request (console or web request)
-        if (Craft::$app->request->isConsoleRequest) {
-            $this->controllerNamespace = 'modules\\places\\console\\controllers';
-        } else {
-            $this->controllerNamespace = 'modules\\places\\controllers';
-        }
-
         // Initialize the parent module
-        parent::init();
-
-        // Attach event handlers once the Craft application has been initialized
-        Craft::$app->onInit(function () {
-            $this->attachEventHandlers();
-        });
-    }
-
-    // Function to attach event handlers, empty in this case
-    private function attachEventHandlers(): void
-    {
-        // Register event handlers here ...
+        parent::init();       
     }
 
     // Function to get places using Google Places API

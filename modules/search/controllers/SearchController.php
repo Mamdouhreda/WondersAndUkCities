@@ -25,33 +25,44 @@ class SearchController extends Controller
         // Get the API key from the environment variable
         $apiKey = getenv('API_KEY');
 
-        // Initialize a Guzzle HTTP client
-        $client = new Client();
+        // Generate a cache key based on the city name
+        $cacheKey = 'googlePlaces_' . $city;
 
-        // Make a GET request to the Google Places API
-        $response = $client->request('GET', 'https://maps.googleapis.com/maps/api/place/autocomplete/json', [
-            'query' => [
-                'input' => $city,
-                'types' => '(cities)',
-                'components' => 'country:uk',
-                'key' => $apiKey,
-            ],
-        ]);
+        // Check if the data is already cached
+        $results = Craft::$app->cache->get($cacheKey);
 
-        // Decode the JSON response body
-        $data = json_decode($response->getBody(), true);
+        if (!$results) {
+            // Initialize a Guzzle HTTP client
+            $client = new Client();
 
-        // If no predictions were found, return an error
-        if (!isset($data['predictions']) || count($data['predictions']) == 0) {
-            return $this->asJson([
-                'error' => 'No results found for the given input. Please enter a valid UK city name.',
+            // Make a GET request to the Google Places API
+            $response = $client->request('GET', 'https://maps.googleapis.com/maps/api/place/autocomplete/json', [
+                'query' => [
+                    'input' => $city,
+                    'types' => '(cities)',
+                    'components' => 'country:uk',
+                    'key' => $apiKey,
+                ],
             ]);
-        }
 
-        // Format the predictions for return
-        $results = array_map(function ($prediction) {
-            return ['description' => $prediction['description'], 'place_id' => $prediction['place_id']];
-        }, $data['predictions']);
+            // Decode the JSON response body
+            $data = json_decode($response->getBody(), true);
+
+            // If no predictions were found, return an error
+            if (!isset($data['predictions']) || count($data['predictions']) == 0) {
+                return $this->asJson([
+                    'error' => 'No results found for the given input. Please enter a valid UK city name.',
+                ]);
+            }
+
+            // Format the predictions for return
+            $results = array_map(function ($prediction) {
+                return ['description' => $prediction['description'], 'place_id' => $prediction['place_id']];
+            }, $data['predictions']);
+
+            // Cache the results
+            Craft::$app->cache->set($cacheKey, $results);
+        }
 
         // Return the predictions as a JSON response
         return $this->asJson([
@@ -71,20 +82,31 @@ class SearchController extends Controller
         // Get the API key from the environment variable
         $apiKey = getenv('API_KEY');
 
-        // Initialize a Guzzle HTTP client
-        $client = new Client();
+        // Generate a cache key based on the place ID
+        $cacheKey = 'googlePlacesDetails_' . $placeId;
 
-        // Make a GET request to the Google Places API
-        $response = $client->request('GET', 'https://maps.googleapis.com/maps/api/place/details/json', [
-            'query' => [
-                'place_id' => $placeId,
-                'fields' => 'name,geometry',
-                'key' => $apiKey,
-            ],
-        ]);
+        // Check if the data is already cached
+        $data = Craft::$app->cache->get($cacheKey);
 
-        // Decode the JSON response body
-        $data = json_decode($response->getBody(), true);
+        if (!$data) {
+            // Initialize a Guzzle HTTP client
+            $client = new Client();
+
+            // Make a GET request to the Google Places API
+            $response = $client->request('GET', 'https://maps.googleapis.com/maps/api/place/details/json', [
+                'query' => [
+                    'place_id' => $placeId,
+                    'fields' => 'name,geometry',
+                    'key' => $apiKey,
+                ],
+            ]);
+
+            // Decode the JSON response body
+            $data = json_decode($response->getBody(), true);
+
+            // Cache the data
+            Craft::$app->cache->set($cacheKey, $data);
+        }
 
         // If location details were found, return them as a JSON response
         if (isset($data['result']['geometry']['location'])) {
